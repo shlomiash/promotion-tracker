@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 
+import NavBarClient from "@/components/nav/navbar-client";
+
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -28,6 +30,8 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased m-4 max-w-5xl mx-auto`}
       >
+        {/* Here we will check if the user is logged in or not and show the admin or client navbar */}
+        <NavBarClient />
         {children}
       </body>
     </html>

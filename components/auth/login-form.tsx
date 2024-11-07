@@ -18,9 +18,26 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
+const admin = {
+    username: process.env.NEXT_PUBLIC_ADMIN_USERNAME,
+    password: process.env.NEXT_PUBLIC_ADMIN_PASSWORD
+}
+
+const adminSession = {
+    name: "admin",
+    loggedIn: false,
+    profileImg:"https://github.com/shadcn.png"
+}
+
  
 
 export const LoginForm = () => {
+
+    const router = useRouter();
+
     const form = useForm<z.infer<typeof LoginSchema>>({
       resolver: zodResolver(LoginSchema),
       defaultValues: {
@@ -31,7 +48,13 @@ export const LoginForm = () => {
   
     const onSubmit =   (values: z.infer<typeof LoginSchema>) => {
         //Here is where the login locig will be implemented
+
+        //No backend logic yet, so we will use the admin object to check if the user is an admin
+        if(values.email === admin.username && values.password === admin.password){
+            router.push("/admin/dashboard");
+
     };
+    }
   
     return (
       <AuthCard
