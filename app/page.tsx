@@ -1,7 +1,11 @@
-import Image from "next/image";
+import NavBarClient from "@/components/nav/navbar-client";
+
 
 export default function Home() {
   return (
-    <h1>Homepage</h1>
+    <main>
+      <NavBarClient />
+      <h1>Homepage</h1>
+    </main>
   );
 }
