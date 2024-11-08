@@ -3,9 +3,9 @@ import { RegisterForm } from "@/components/auth/register-form";
 import { auth } from "@/server/auth";
 
 export default async function RegisterPage() {
+  const session = await auth();
 
-    const session = await auth();
-    if(!session) return <NotAdminError />;
+  if (!session) return <NotAdminError />;
 
-  return <RegisterForm/>
+  return <RegisterForm />;
 }
