@@ -11,7 +11,7 @@ export const handleLogin = actionClient
       await signIn("credentials", {
         email: email,
         password: password,
-        redirectTo: "/", //Redirect to home page after sign in
+        redirectTo: "/admin/dashboard", //Redirect to home page after sign in
       });
     
 

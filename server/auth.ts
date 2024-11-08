@@ -15,8 +15,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
       authorize: async (credentials) => { 
 
-        console.log("Credentialls")
-
         const validateFields = LoginSchema.safeParse(credentials);
 
         if(!validateFields.success) return null;
@@ -26,7 +24,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
         //LOGIC WITH NO DATABASE
         if(email === admin.username && password === admin.password){
-          console.log("Admin Logged In");
           return { image: 'https://github.com/shadcn.png'};
         }
 
