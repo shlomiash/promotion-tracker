@@ -3,7 +3,7 @@
 //This is our login form component that will be used in the login page.
 
 import AuthCard from "@/components/auth/auth-card";
-import { LoginSchema } from "@/types/login-schema";
+import { RegisterSchema } from "@/types/register-schema";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,48 +18,59 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { handleLogin } from "@/server/handle-login";
 import { useState } from "react";
-import FormSuccess from "./form-success";
 import FormError from "./form-error";
+import { handleRegister } from "@/server/handle-register";
 
 
 
-export const LoginForm = () => {
+export const RegisterForm = () => {
 
   const [success, setSuccess] = useState<boolean|null>(null);
 
-    const form = useForm<z.infer<typeof LoginSchema>>({
-      resolver: zodResolver(LoginSchema),
+    const form = useForm<z.infer<typeof RegisterSchema>>({
+      resolver: zodResolver(RegisterSchema),
       defaultValues: {
         email: "",
         password: "",
       },
     });
   
-    const onSubmit = async (values: z.infer<typeof LoginSchema>) => {
+    const onSubmit = async (values: z.infer<typeof RegisterSchema>) => {
 
-        const result = await handleLogin(values);
-
-        if(result?.data?.success){
-          setSuccess(true);
-        }
-
-        setSuccess(false);
-
+        const result = await handleRegister(values);
 
     }
   
     return (
       <AuthCard
-        cardTitle="Welcome Back!"
-        backButtonHref="/"
-        backButtonLabel="Return to Homepage"
+        cardTitle="Join Our Squad!"
+        backButtonHref="/admin/dashboard"
+        backButtonLabel="Return to dashboard"
       >
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <div className="flex flex-col gap-4">
               <div>
+              <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>FullName</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="yourName"
+                          type="text"
+                          autoComplete="name"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormDescription/>
+                      <FormMessage/>
+                    </FormItem>
+                  )}
+                />
                 <FormField
                   control={form.control}
                   name="email"
@@ -99,11 +110,27 @@ export const LoginForm = () => {
                   </FormItem>
                 )}
               />
-                <FormSuccess message={success? "Logged in successfully!": ""} />
-                <FormError message={success === false? "Invalid credentials!": ""}/>
+              <FormField
+                control={form.control}
+                name="confirmPassword"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Confirm Password</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="***********"
+                        type="password"
+                        {...field}
+                      />
+                    </FormControl>
+                      <FormMessage/>
+                  </FormItem>
+                )}
+              />
+                <FormError message="Cannot create a new user admin for this moment"/>
               </div>
             </div>
-            <Button type="submit" className="w-full">Login</Button>
+            <Button type="submit" className="w-full">Signup</Button>
           </form>
         </Form>
       </AuthCard>
