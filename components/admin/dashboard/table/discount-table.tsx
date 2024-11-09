@@ -14,37 +14,17 @@ import {
   } from "@/components/ui/table"
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge"
-
-
-  type Discount = {
-    id: number;
-    code: string;
-    limits: number;
-    amount: string;
-    userCreatedId: number;
-    note: string;
-    createdAt: string;
-    expires: string;
-    canBeCombined: boolean;
-    active: boolean;
-  }
+import { EditButton } from "./edit-button";
+import { useQuery } from "@tanstack/react-query";
+import { Discount } from "@/server/data/discounts";
 
 
 export default function DiscountTable() {
 
-    const [data, setData] = useState<Discount[] | null>(null);
-
-    const getAllDiscounts = useCallback(async () => {
-        const response = await fetch('/api/discount');
-        const result = await response.json();
-        setData(result);
-        
-    }, []);
-
-    useEffect(() => {
-        getAllDiscounts();
-    },[]);
-
+  const { data:discounts , error,isLoading} = useQuery<Discount[]>({
+    queryKey:['discounts'],
+    queryFn:() => fetch('/api/discount').then(res => res.json())
+  })
 
     return (
             <Table>
@@ -64,7 +44,7 @@ export default function DiscountTable() {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {data?.map((discount) => (
+        {discounts?.map((discount) => (
           <TableRow key={discount.id}>
             <TableCell className="hidden font-medium">{discount.id}</TableCell>
             <TableCell >{discount.code}</TableCell>
@@ -75,7 +55,7 @@ export default function DiscountTable() {
             <TableCell className="hidden">{discount.createdAt}</TableCell>
             <TableCell className="hidden">{discount.userCreatedId}</TableCell>
             <TableCell className="hidden">{discount.note}</TableCell>
-            <TableCell><Button>EDIT</Button></TableCell>
+            <TableCell><EditButton discount={discount}/></TableCell>
           </TableRow>
         ))}
       </TableBody>
