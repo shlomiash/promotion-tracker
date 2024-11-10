@@ -30,12 +30,17 @@ import {
 import { cn } from "@/lib/utils";
 import { Switch } from "@/components/ui/switch"
 import FormError from "@/components/auth/form-error";
+import { useRouter } from "next/navigation";
 
 //------------------------------------------------------------------
 //WE NEED TO THINK IFFFF WE NEED TO SETUP A BOOLEAN FOR EDIT OR ADD
 //------------------------------------------------------------------
 
+
 export const DiscountForm = () => {
+
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof DiscountSchema>>({
     resolver: zodResolver(DiscountSchema),
     defaultValues: {
@@ -52,6 +57,8 @@ export const DiscountForm = () => {
   const onSubmit = async (values: z.infer<typeof DiscountSchema>) => {
     const result = await handleAddDiscount(values);
     console.log(values);
+    router.push('/admin/dashboard')
+    
   };
 
   return (

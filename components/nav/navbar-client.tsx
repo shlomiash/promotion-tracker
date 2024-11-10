@@ -3,6 +3,7 @@
 import { auth } from "@/server/auth"
 import AdminButton from "../auth/Admin-button";
 import LoginButton from "../auth/login-button";
+import Link from "next/link";
 
 
 export default async function NavBarClient(){
@@ -12,7 +13,9 @@ export default async function NavBarClient(){
     return (
         <nav className="pt-6 pb-8 px-4">
             <ul className="flex justify-between">
-                <li>PROMOTION-TRACKER</li>
+                <li>
+                    <Link href="/">PROMOTION-TRACKER</Link>
+                </li>
                 <li>
                     {session? (
                         <AdminButton expires={session.expires} user={session?.user}/>

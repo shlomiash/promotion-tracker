@@ -2,7 +2,6 @@
 
 import { DiscountSchema } from "@/types/discount-schema";
 import { createSafeActionClient } from "next-safe-action";
-import { Discount } from "./data/discounts";
 import { auth } from "./auth";
 
 
