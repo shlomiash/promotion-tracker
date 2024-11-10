@@ -196,7 +196,6 @@ export const DiscountForm = () => {
           name="active"
           render={({ field }) => (
             <FormItem className="flex flex-col">
-              <FormLabel>Status</FormLabel>
                   <FormControl>
                     <div className="flex items-center space-x-2">
                       <Label>Disabled</Label>
@@ -214,12 +213,11 @@ export const DiscountForm = () => {
           name="canBeCombined"
           render={({ field }) => (
             <FormItem className="flex flex-col">
-              <FormLabel>Can Be Combined</FormLabel>
                   <FormControl>
                     <div className="flex items-center space-x-2">
-                      <Label>False</Label>
+                      <Label>Single-use </Label>
                         <Switch id="canBeCombined" onCheckedChange={field.onChange}/>
-                      <Label >True</Label>
+                      <Label >Stackable</Label>
                     </div>
                   </FormControl>
               <FormDescription>
@@ -232,10 +230,10 @@ export const DiscountForm = () => {
           name="note"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Bio</FormLabel>
+              <FormLabel>Note</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder="Tell us a little bit about yourself"
+                  placeholder="Add note for this promotion..."
                   className="resize-none"
                   {...field}
                 />

@@ -29,19 +29,6 @@ export type Discount = {
         isFixed: true
     },
     {
-        id: 12,
-        code: "SUMMERSHIP",
-        amount: 0, // Deduct $0 (free shipping)
-        limits: 50,
-        expires: new Date("2025-06-30"),
-        createdAt: new Date("2024-11-10"),
-        userCreatedId: 112,
-        note: "Free shipping during the summer season",
-        canBeCombined: true,
-        active: true,
-        isFixed: true
-    },
-    {
         id: 13,
         code: "FESTIVE30",
         amount: 30, // Deduct $30 from total payment
@@ -91,7 +78,7 @@ export type Discount = {
         note: "Autumn clearance sale",
         canBeCombined: false,
         active: true,
-        isFixed: true
+        isFixed: false
     },
     {
         id: 17,
@@ -104,7 +91,7 @@ export type Discount = {
         note: "New Year $100 discount",
         canBeCombined: false,
         active: true,
-        isFixed: true
+        isFixed: false
     },
     {
         id: 18,

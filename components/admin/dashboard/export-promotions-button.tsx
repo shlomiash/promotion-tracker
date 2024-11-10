@@ -6,12 +6,12 @@ import Link from "next/link"
 
 export default function ExportPromotionsButton(){
     return (
-        <div className="w-full flex justify-end">
+        <div className="w-full flex justify-end mt-8 mb-8">
             <Button>
                 <Link href="/admin/dashboard/add-promotion">
                     Export Discounts
                 </Link>
-                </Button>
+            </Button>
         </div>
     )
 }

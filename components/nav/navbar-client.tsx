@@ -11,9 +11,9 @@ export default async function NavBarClient(){
     const session = await auth();
 
     return (
-        <nav className="pt-6 pb-8 px-4">
-            <ul className="flex justify-between">
-                <li>
+        <nav className=" pt-4 pb-4 px-2 md:pt-6 md:pb-8">
+            <ul className="flex justify-between items-center w-full">
+                <li className="text-sm tracking-wider">
                     <Link href="/">PROMOTION-TRACKER</Link>
                 </li>
                 <li>

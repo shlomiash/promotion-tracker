@@ -58,7 +58,10 @@ export default function DiscountTable() {
             <TableCell >{discount.code}</TableCell>
             <TableCell >{discount.active? <Badge className="bg-green-800">active</Badge> : <Badge className="bg-red-900" >disabled</Badge>}</TableCell>
             <TableCell>{discount.limits}</TableCell>
-            <TableCell >{discount.amount}</TableCell>
+            <TableCell >
+              <span>{discount.amount}</span>
+              <span>{discount.isFixed? '₪' : '%'}</span>
+              </TableCell>
             <TableCell >{discount.expires?.toLocaleDateString()}</TableCell>
             <TableCell >{discount.createdAt?.toLocaleDateString()}</TableCell>
             <TableCell >{discount.userCreatedId}</TableCell>

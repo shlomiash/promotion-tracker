@@ -3,7 +3,7 @@ import AddPromotionButton from "@/components/admin/dashboard/adding-discounts/ad
 import AdminDashboard from "@/components/admin/dashboard/admin-dashboard";
 import ExportPromotionsButton from "@/components/admin/dashboard/export-promotions-button";
 import NotAdminError from "@/components/admin/dashboard/not-admin-error";
-import WelcomeDashboard from "@/components/admin/dashboard/welcome-dashboard";
+import WelcomeMessage from "@/components/admin/dashboard/welcome-message";
 import { auth } from "@/server/auth";
 
 
@@ -17,7 +17,7 @@ export default async function Dashboard(){
 
     return (
         <main>
-            <WelcomeDashboard/>
+            <WelcomeMessage message="Welcome Dashboard"/>
             <AddPromotionButton/>
             <AdminDashboard/>
             <ExportPromotionsButton/>
