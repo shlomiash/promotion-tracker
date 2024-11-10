@@ -24,7 +24,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
         //LOGIC WITH NO DATABASE
         if(email === admin.username && password === admin.password){
-          return { image: 'https://github.com/shadcn.png'};
+          return {id:'1',image:'https://github.com/shadcn.png'};
         }
 
 

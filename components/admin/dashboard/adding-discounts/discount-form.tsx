@@ -29,8 +29,7 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { Switch } from "@/components/ui/switch"
-// import FormSuccess from "./form-success";
-// import FormError from "./form-error";
+import FormError from "@/components/auth/form-error";
 
 //------------------------------------------------------------------
 //WE NEED TO THINK IFFFF WE NEED TO SETUP A BOOLEAN FOR EDIT OR ADD
@@ -52,7 +51,7 @@ export const DiscountForm = () => {
 
   const onSubmit = async (values: z.infer<typeof DiscountSchema>) => {
     const result = await handleAddDiscount(values);
-    console.log("result", result?.data);
+    console.log(values);
   };
 
   return (
@@ -240,10 +239,13 @@ export const DiscountForm = () => {
             </FormItem>
           )}
         />
-          </div>
+        <div>
+          <FormError message={"Cannot Upload Promotion For This Moment , But you can see in inspect that data works on click"} />
+        </div>
         <Button type="submit" className="w-full">
           Add Promotion
         </Button>
+          </div>
       </form>
     </Form>
   );
