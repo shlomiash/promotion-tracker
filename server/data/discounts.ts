@@ -2,136 +2,147 @@
 export type Discount = {
     id: number;
     code: string;
-    limits: number;
-    amount: string;
+    limits: number | undefined;
+    amount: number;
     userCreatedId: number;
-    note: string;
-    createdAt: string;
-    expires: string;
+    note: string|undefined;
+    createdAt: Date;
+    expires: Date | undefined;
     canBeCombined: boolean;
     active: boolean;
+    isFixed: boolean;
   }
 
 
-export const discountCodes:Discount[] = [
+  export const discountCodes: Discount[] = [
     {
-        id: 1,
-        code: "SUMMER20",
-        amount: "20%", // percentage
-        limits: 100,
-        expires: "2024-12-31",
-        createdAt: "2024-11-08",
-        userCreatedId: 101,
-        note: "Seasonal discount for summer sales",
-        canBeCombined: false,
-        active: true
+        id: 11,
+        code: "SPRINGFEST25",
+        amount: 25, // Deduct $25 from total payment
+        limits: 120,
+        expires: new Date("2025-03-30"),
+        createdAt: new Date("2024-11-10"),
+        userCreatedId: 111,
+        note: "Spring festival special offer",
+        canBeCombined: true,
+        active: true,
+        isFixed: true
     },
     {
-        id: 2,
-        code: "WELCOME5",
-        amount: "$5", // fixed price
+        id: 12,
+        code: "SUMMERSHIP",
+        amount: 0, // Deduct $0 (free shipping)
         limits: 50,
-        expires: "2025-01-15",
-        createdAt: "2024-10-22",
-        userCreatedId: 102,
-        note: "New user welcome bonus",
+        expires: new Date("2025-06-30"),
+        createdAt: new Date("2024-11-10"),
+        userCreatedId: 112,
+        note: "Free shipping during the summer season",
         canBeCombined: true,
-        active: true
+        active: true,
+        isFixed: true
     },
     {
-        id: 3,
-        code: "BLACKFRIDAY50",
-        amount: "50%", // percentage
-        limits: 500,
-        expires: "2024-11-29",
-        createdAt: "2024-11-01",
-        userCreatedId: 103,
-        note: "Black Friday special",
-        canBeCombined: false,
-        active: true
-    },
-    {
-        id: 4,
-        code: "WINTERSALE30",
-        amount: "30%", // percentage
+        id: 13,
+        code: "FESTIVE30",
+        amount: 30, // Deduct $30 from total payment
         limits: 200,
-        expires: "2025-02-15",
-        createdAt: "2024-11-05",
-        userCreatedId: 104,
-        note: "Winter sale offer",
+        expires: new Date("2024-12-31"),
+        createdAt: new Date("2024-11-09"),
+        userCreatedId: 113,
+        note: "End-of-year festive discount",
         canBeCombined: false,
-        active: true
+        active: true,
+        isFixed: true
     },
     {
-        id: 5,
-        code: "FREESHIP",
-        amount: "$0", // fixed price (free shipping)
+        id: 14,
+        code: "WELCOMEBONUS20",
+        amount: 20, // Deduct $20 from total payment
         limits: 100,
-        expires: "2025-03-31",
-        createdAt: "2024-10-28",
-        userCreatedId: 105,
-        note: "Free shipping for orders over $50",
+        expires: new Date("2025-07-15"),
+        createdAt: new Date("2024-11-10"),
+        userCreatedId: 114,
+        note: "Welcome bonus for new customers",
         canBeCombined: true,
-        active: false
+        active: true,
+        isFixed: true
     },
     {
-        id: 6,
-        code: "SPRING10",
-        amount: "10%", // percentage
+        id: 15,
+        code: "BIRTHDAYGIFT50",
+        amount: 50, // Deduct $50 from total payment
+        limits: 10,
+        expires: new Date("2025-05-20"),
+        createdAt: new Date("2024-11-10"),
+        userCreatedId: 115,
+        note: "Special $50 off for birthday promotions",
+        canBeCombined: false,
+        active: true,
+        isFixed: true
+    },
+    {
+        id: 16,
+        code: "FALLCLEAR25",
+        amount: 25, // Deduct $25 from total payment
         limits: 150,
-        expires: "2025-05-01",
-        createdAt: "2024-11-03",
-        userCreatedId: 106,
-        note: "Spring sale discount",
-        canBeCombined: true,
-        active: true
+        expires: new Date("2024-11-30"),
+        createdAt: new Date("2024-11-07"),
+        userCreatedId: 116,
+        note: "Autumn clearance sale",
+        canBeCombined: false,
+        active: true,
+        isFixed: true
     },
     {
-        id: 7,
-        code: "HOLIDAY25",
-        amount: "25%", // percentage
+        id: 17,
+        code: "NEWYEAR2025",
+        amount: 100, // Deduct $100 from total payment
+        limits: 30,
+        expires: new Date("2025-01-02"),
+        createdAt: new Date("2024-11-09"),
+        userCreatedId: 117,
+        note: "New Year $100 discount",
+        canBeCombined: false,
+        active: true,
+        isFixed: true
+    },
+    {
+        id: 18,
+        code: "SUMMER50OFF",
+        amount: 50, // Deduct $50 from total payment
+        limits: 500,
+        expires: new Date("2025-08-31"),
+        createdAt: new Date("2024-11-10"),
+        userCreatedId: 118,
+        note: "Summer blowout sale $50 off",
+        canBeCombined: false,
+        active: true,
+        isFixed: true
+    },
+    {
+        id: 19,
+        code: "HOLIDAYCHEER15",
+        amount: 15, // Deduct $15 from total payment
+        limits: 80,
+        expires: new Date("2024-12-24"),
+        createdAt: new Date("2024-11-10"),
+        userCreatedId: 119,
+        note: "Holiday cheer special discount",
+        canBeCombined: true,
+        active: false,
+        isFixed: true
+    },
+    {
+        id: 20,
+        code: "EXCLUSIVE20",
+        amount: 20, // Deduct $20 from total payment
         limits: 250,
-        expires: "2024-12-25",
-        createdAt: "2024-11-08",
-        userCreatedId: 107,
-        note: "Holiday discount for festive season",
-        canBeCombined: false,
-        active: false
-    },
-    {
-        id: 8,
-        code: "NEWYEAR100",
-        amount: "$100", // fixed price
-        limits: 20,
-        expires: "2025-01-01",
-        createdAt: "2024-11-02",
-        userCreatedId: 108,
-        note: "New Year special $100 off",
-        canBeCombined: false,
-        active: true
-    },
-    {
-        id: 9,
-        code: "FALL15",
-        amount: "15%", // percentage
-        limits: 75,
-        expires: "2024-12-15",
-        createdAt: "2024-09-15",
-        userCreatedId: 109,
-        note: "Autumn sale discount",
+        expires: new Date("2025-06-15"),
+        createdAt: new Date("2024-11-10"),
+        userCreatedId: 120,
+        note: "Exclusive $20 off for premium members",
         canBeCombined: true,
-        active: false
-    },
-    {
-        id: 10,
-        code: "CLEARANCE50",
-        amount: "50%", // percentage
-        limits: 300,
-        expires: "2024-12-31",
-        createdAt: "2024-11-04",
-        userCreatedId: 110,
-        note: "Clearance sale half-off deal",
-        canBeCombined: false,
-        active: true
+        active: true,
+        isFixed: true
     }
 ];

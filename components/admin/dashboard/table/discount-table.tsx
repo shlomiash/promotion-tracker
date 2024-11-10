@@ -31,30 +31,30 @@ export default function DiscountTable() {
       <TableCaption>A list of your discounts.</TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead className="hidden font-medium">ID</TableHead>
+          <TableHead >ID</TableHead>
           <TableHead >Code</TableHead>
           <TableHead >Status</TableHead>
           <TableHead>Limits</TableHead>
-          <TableHead className="hidden md:table-cell" >Amount</TableHead>
-          <TableHead className="hidden">User_Id</TableHead>
-          <TableHead className="hidden" >Expires</TableHead>
-          <TableHead className="hidden">Created At</TableHead>
-          <TableHead className="hidden">note</TableHead>
+          <TableHead >Amount</TableHead>
+          <TableHead >Expires</TableHead>
+          <TableHead >Created At</TableHead>
+          <TableHead >User_Id</TableHead>
+          <TableHead >note</TableHead>
           <TableHead>EDIT</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {discounts?.map((discount) => (
           <TableRow key={discount.id}>
-            <TableCell className="hidden font-medium">{discount.id}</TableCell>
+            <TableCell >{discount.id}</TableCell>
             <TableCell >{discount.code}</TableCell>
             <TableCell >{discount.active? <Badge className="bg-green-800">active</Badge> : <Badge className="bg-red-900" >disabled</Badge>}</TableCell>
             <TableCell>{discount.limits}</TableCell>
-            <TableCell className="hidden md:table-cell">{discount.amount}</TableCell>
-            <TableCell className="hidden">{discount.expires}</TableCell>
-            <TableCell className="hidden">{discount.createdAt}</TableCell>
-            <TableCell className="hidden">{discount.userCreatedId}</TableCell>
-            <TableCell className="hidden">{discount.note}</TableCell>
+            <TableCell >{discount.amount}</TableCell>
+            <TableCell >{discount.expires}</TableCell>
+            <TableCell >{discount.createdAt}</TableCell>
+            <TableCell >{discount.userCreatedId}</TableCell>
+            <TableCell >{discount.note}</TableCell>
             <TableCell><EditButton discount={discount}/></TableCell>
           </TableRow>
         ))}
