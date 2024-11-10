@@ -12,7 +12,7 @@ export default function FormError({ message }: { message: string }) {
     if(!message) return null;
 
   return (
-    <Alert variant="destructive" className="mt-4">
+    <Alert variant="destructive" className="mt-1">
       <AlertCircle className="h-4 w-4" />
       <AlertTitle>Error</AlertTitle>
       <AlertDescription>
