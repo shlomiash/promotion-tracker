@@ -2,6 +2,7 @@
 
 import { DiscountSchema } from "@/types/discount-schema";
 import { createSafeActionClient } from "next-safe-action";
+import { discountCodes } from "./data/discounts";
 import { auth } from "./auth";
 
 
@@ -19,9 +20,15 @@ export const handleAddDiscount = actionClient
     //Will get the user id from the session
     //const userCreatedId = session?.user?.id;
 
+    //Checking if discount code already exists
+    const discount = discountCodes.filter((discount) => discount.code === code);
+    if(discount.length > 0){
+      return {error: 'Discount code already exists , please choose another one'};
+    }
+
     // Insert the user into the database
     //await db.insert(discounts).values({code, isFixed , active , canBeCombined , amount ,expires , limits ,note ,userCreatedId})
     
-    return {error: 'Cannot create discount for now'};
+    return {error: 'Cannot Upload Promotion For This Moment , But you can see in inspect that data works on click'};
     
   });

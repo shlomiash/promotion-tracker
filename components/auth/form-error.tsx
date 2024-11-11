@@ -7,12 +7,12 @@ import {
 } from "@/components/ui/alert"
 
 
-export default function FormError({ message }: { message: string }) {
+export default function FormError({ message }: { message: string | null }) {
 
     if(!message) return null;
 
   return (
-    <Alert variant="destructive" className="mt-1">
+    <Alert variant="destructive" className="mt-4">
       <AlertCircle className="h-4 w-4" />
       <AlertTitle>Error</AlertTitle>
       <AlertDescription>

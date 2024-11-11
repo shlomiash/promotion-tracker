@@ -31,6 +31,7 @@ import { cn } from "@/lib/utils";
 import { Switch } from "@/components/ui/switch"
 import FormError from "@/components/auth/form-error";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 //------------------------------------------------------------------
 //WE NEED TO THINK IFFFF WE NEED TO SETUP A BOOLEAN FOR EDIT OR ADD
@@ -40,6 +41,8 @@ import { useRouter } from "next/navigation";
 export const DiscountForm = () => {
 
   const router = useRouter();
+
+  const [error ,setError] = useState<string | null>(null);
 
   const form = useForm<z.infer<typeof DiscountSchema>>({
     resolver: zodResolver(DiscountSchema),
@@ -56,7 +59,15 @@ export const DiscountForm = () => {
 
   const onSubmit = async (values: z.infer<typeof DiscountSchema>) => {
     const result = await handleAddDiscount(values);
+
     console.log(values);
+
+    if(result?.data?.error){
+      setError(result.data.error);
+      return;
+    }
+
+    
     router.push('/admin/dashboard')
     
   };
@@ -245,7 +256,7 @@ export const DiscountForm = () => {
           )}
         />
         <div>
-          <FormError message={"Cannot Upload Promotion For This Moment , But you can see in inspect that data works on click"} />
+          <FormError message={error} />
         </div>
         <Button type="submit" className="w-full">
           Add Promotion
