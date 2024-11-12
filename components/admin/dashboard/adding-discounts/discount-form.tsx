@@ -47,18 +47,16 @@ export const DiscountForm = () => {
   const router = useRouter();
 
   const [error ,setError] = useState<string | null>(null);
-
   const searchParams = useSearchParams();
 
   const id = searchParams.get('id');
   
     const {data:discount} = useQuery<Discount | undefined>({
-      queryKey:['discounts'],
+      queryKey:['discountById'],
       queryFn:() => getDiscountById(Number(id)),
       enabled: !!id,
     });
 
-    console.log(discount);
  
 
   const form = useForm<z.infer<typeof DiscountSchema>>({

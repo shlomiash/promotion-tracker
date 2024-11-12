@@ -1,3 +1,5 @@
+'use client'
+
 import { Button } from "@/components/ui/button";
 import { Discount } from "@/server/data/discounts";
 import Link from "next/link";
