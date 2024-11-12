@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils"
 /* eslint-disable @typescript-eslint/no-empty-interface */
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
-
+  type?: "text" | "password" | "email" | "number" | "search"
   }
 /* eslint-enable @typescript-eslint/no-empty-interface */
 
