@@ -20,7 +20,7 @@ import { handleAddDiscount } from "@/server/handle-add-discount";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { format } from "date-fns"
-import { CalendarIcon, TrendingUpDownIcon } from "lucide-react";
+import { CalendarIcon} from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,

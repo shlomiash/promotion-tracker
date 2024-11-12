@@ -23,7 +23,6 @@ import FormError from "./form-error";
 import { handleRegister } from "@/server/handle-register";
 
 export const RegisterForm = () => {
-  const [success, setSuccess] = useState<boolean | null>(null);
 
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
@@ -37,6 +36,8 @@ export const RegisterForm = () => {
 
   const onSubmit = async (values: z.infer<typeof RegisterSchema>) => {
     const result = await handleRegister(values);
+    console.log(values);
+    console.log(result);
   };
 
   return (

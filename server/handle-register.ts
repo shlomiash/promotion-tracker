@@ -13,5 +13,6 @@ const actionClient = createSafeActionClient();
 
 export const handleRegister = actionClient
   .schema(RegisterSchema).action(async ({ parsedInput: { email, password ,name} }) => {
+
       return {error: 'Cannot create another user for now!'};
   });
