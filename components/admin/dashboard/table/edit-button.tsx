@@ -4,10 +4,9 @@ import Link from "next/link";
 
 export function EditButton({ discount }: { discount: Discount }) {
   return (
-
     <Button asChild variant="outline">
       <Link href={`/admin/dashboard/add-promotion?id=${discount.id}`}>
-        Edit Discount
+        Edit
       </Link>
     </Button>
   );

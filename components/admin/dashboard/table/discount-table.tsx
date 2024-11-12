@@ -15,6 +15,7 @@ import { EditButton } from "./edit-button";
 import { useQuery } from "@tanstack/react-query";
 import { Discount } from "@/server/data/discounts";
 import { getDiscounts } from "@/server/get-data";
+import { DeleteButton } from "./delete-button";
 
 
 export default function DiscountTable() {
@@ -66,7 +67,12 @@ export default function DiscountTable() {
             <TableCell >{discount.createdAt?.toLocaleDateString()}</TableCell>
             <TableCell >{discount.userCreatedId}</TableCell>
             <TableCell >{discount.note}</TableCell>
-            <TableCell><EditButton discount={discount}/></TableCell>
+            <TableCell>
+              <div className="flex gap-2">
+                <EditButton discount={discount}/>
+                <DeleteButton discount={discount}/>
+              </div>
+              </TableCell>
           </TableRow>
         ))}
       </TableBody>
