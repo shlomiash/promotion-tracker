@@ -122,7 +122,7 @@ export type Discount = {
     {
         id: 20,
         code: "EXCLUSIVE20",
-        amount: 20, // Deduct $20 from total payment
+        amount: 20, // Deduct %20 from total payment
         limits: 250,
         expires: new Date("2025-06-15"),
         createdAt: new Date("2024-11-10"),
@@ -130,6 +130,6 @@ export type Discount = {
         note: "Exclusive $20 off for premium members",
         canBeCombined: true,
         active: true,
-        isFixed: true
+        isFixed: false
     }
 ];

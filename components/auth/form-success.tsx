@@ -14,9 +14,9 @@ export default function FormSuccess({message} : {message: string}) {
   return (
     <Alert variant="default" className="bg-green-300">
       <AlertCircle className="h-4 w-4" />
-      <AlertTitle>Error</AlertTitle>
+      <AlertTitle>Success</AlertTitle>
       <AlertDescription>
-        Incorrect email or password!
+        {message}
       </AlertDescription>
     </Alert>
   );
