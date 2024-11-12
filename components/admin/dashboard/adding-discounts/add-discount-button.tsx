@@ -11,7 +11,7 @@ export default function AddPromotionButton(){
                 <Link href="/admin/dashboard/add-promotion">
                     Add Promotion
                 </Link>
-                </Button>
+            </Button>
         </div>
     )
 }

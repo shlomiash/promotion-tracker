@@ -6,10 +6,6 @@ import NotAdminError from "@/components/admin/dashboard/not-admin-error";
 import WelcomeMessage from "@/components/admin/dashboard/welcome-message";
 import { auth } from "@/server/auth";
 
-
-
-
-
 export default async function Dashboard(){
 
     const session = await auth();

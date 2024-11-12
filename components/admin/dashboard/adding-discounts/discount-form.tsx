@@ -20,7 +20,7 @@ import { handleAddDiscount } from "@/server/handle-add-discount";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { format } from "date-fns"
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, TrendingUpDownIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
@@ -30,8 +30,12 @@ import {
 import { cn } from "@/lib/utils";
 import { Switch } from "@/components/ui/switch"
 import FormError from "@/components/auth/form-error";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { getDiscountById } from "@/server/get-data";
+import { useQuery } from "@tanstack/react-query";
+import { Discount } from "@/server/data/discounts";
+import { handleEditDiscount } from "@/server/handle-edit-discount";
 
 //------------------------------------------------------------------
 //WE NEED TO THINK IFFFF WE NEED TO SETUP A BOOLEAN FOR EDIT OR ADD
@@ -44,10 +48,24 @@ export const DiscountForm = () => {
 
   const [error ,setError] = useState<string | null>(null);
 
+  const searchParams = useSearchParams();
+
+  const id = searchParams.get('id');
+  
+    const {data:discount} = useQuery<Discount | undefined>({
+      queryKey:['discounts'],
+      queryFn:() => getDiscountById(Number(id)),
+      enabled: !!id,
+    });
+
+    console.log(discount);
+ 
+
   const form = useForm<z.infer<typeof DiscountSchema>>({
     resolver: zodResolver(DiscountSchema),
     defaultValues: {
-      code: "",
+      code: discount?.code || "",
+      expires: discount?.expires || undefined,
       isFixed: true,
       amount: 0,
       canBeCombined: false,
@@ -56,16 +74,44 @@ export const DiscountForm = () => {
     },
   });
 
+  // Update form values when `discount` is loaded
+  useEffect(() => {
+    if (discount) {
+      form.reset({
+        code: discount.code || "",
+        isFixed: discount.isFixed ?? false, // Using nullish coalescing to handle undefined
+        limits: discount.limits || undefined,
+        expires: discount.expires || undefined,
+        amount: discount.amount || 0,
+        canBeCombined: discount.canBeCombined || false,
+        active: discount.active || false,
+        note: discount.note || "",
+      });
+    }
+  }, [discount, form]);
+
 
   const onSubmit = async (values: z.infer<typeof DiscountSchema>) => {
-    const result = await handleAddDiscount(values);
 
-    console.log(values);
-
-    if(result?.data?.error){
-      setError(result.data.error);
-      return;
+    let result ;
+    if(id) {
+       result = await handleEditDiscount(values, Number(id));
+      console.log('updated values are ' , values , 'id is ' , id);
+      if(result?.error){
+        setError(result.error);
+        return;
+      }
     }
+    else{
+       result = await handleAddDiscount(values);
+       console.log(values);
+       if(result?.data?.error){
+        setError(result.data.error);
+        return;
+      }
+    }
+
+    
 
     
     router.push('/admin/dashboard')
@@ -99,7 +145,7 @@ export const DiscountForm = () => {
                     <FormLabel>Discount Type</FormLabel>
                     <FormControl>
                       <RadioGroup
-                        defaultValue="fixed"
+                        defaultValue={discount?.isFixed ? "fixed" : "percentage"}
                         onValueChange={(value) =>
                           field.onChange(value === "true")
                         }
@@ -186,7 +232,7 @@ export const DiscountForm = () => {
                 <PopoverContent className="w-auto p-0" align="start">
                   <Calendar
                     mode="single"
-                    selected={field.value}
+                    selected={discount?.expires || undefined}
                     onSelect={field.onChange}
                     disabled={(date) =>
                       date < new Date()
@@ -210,7 +256,7 @@ export const DiscountForm = () => {
                   <FormControl>
                     <div className="flex items-center space-x-2">
                       <Label>Disabled</Label>
-                        <Switch id="active" onCheckedChange={field.onChange}/>
+                        <Switch defaultChecked={discount?.active} onCheckedChange={field.onChange}/>
                       <Label >Active</Label>
                     </div>
                   </FormControl>

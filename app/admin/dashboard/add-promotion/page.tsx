@@ -8,6 +8,8 @@ export default async function AddPromotionPage() {
     const session = await auth();
     if(!session) return <NotAdminError />;
 
+    
+
     return (
         <section className="m-4">
             <WelcomeMessage message="Add Your Promotion"/>
