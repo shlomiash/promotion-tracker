@@ -26,7 +26,7 @@ export default function DiscountTable() {
   // })
 
   // This optino is without fetch with api route , which i think its easier in nextjs
-  const { data:discounts = [] , error,isLoading} = useQuery<Discount[]>({
+  const { data:discounts = [],isLoading} = useQuery<Discount[]>({
     queryKey:['discounts'],
     queryFn:getDiscounts,
   })

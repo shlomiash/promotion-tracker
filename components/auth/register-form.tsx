@@ -18,7 +18,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
 import FormError from "./form-error";
 import { handleRegister } from "@/server/handle-register";
 
