@@ -13,10 +13,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { Discount } from "@/server/data/discounts"
-import { getDiscountsByCreationDate, getDiscountsByUserId } from "@/server/get-data"
+import { getDiscountsByCreationDate } from "@/server/get-data"
 import { useCallback, useEffect, useState } from "react"
 
 import { addDays, format } from "date-fns"
