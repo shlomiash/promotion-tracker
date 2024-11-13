@@ -20,6 +20,6 @@ export const getDiscountsByUserId = async (userId: number) =>{
 
 export const getDiscountsByCreationDate = async (rangeDate: DateRange | undefined) =>{
     if(!rangeDate || !rangeDate.from || !rangeDate.to) return null;
-    return discountCodes.filter(discount => (discount.createdAt >= rangeDate.from) && (discount.createdAt <= rangeDate.to));
+    return discountCodes.filter(discount => (discount.createdAt >= rangeDate.from!) && (discount.createdAt <= rangeDate.to!));
 }
  
