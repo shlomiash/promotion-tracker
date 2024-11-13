@@ -31,9 +31,9 @@ export default function DiscountTable() {
     queryFn:getDiscounts,
   })
 
-  console.log(discounts)
 
   if (isLoading) return <p>Loading...</p>;
+          //UI and logic for the component
 
     return (
             <Table>

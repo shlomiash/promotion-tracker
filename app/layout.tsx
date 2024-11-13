@@ -33,6 +33,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} `}
       >
         <div className="max-w-6xl mx-auto ">
+          {/* ReactQuery Provider */}
           <Provider>
             <NavBarClient />
             {children}

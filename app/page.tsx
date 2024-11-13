@@ -10,6 +10,7 @@ import { XIcon, ArrowRight } from "lucide-react";
 import { useState } from "react";
 
 export default function Home() {
+  //We are seperating the active discounts into two sets, one for the combined discounts and one for the single discounts
   const [activeDiscountsCombined, setActiveDiscountsCombined] = useState<
     Set<string>
   >(new Set());
@@ -20,6 +21,7 @@ export default function Home() {
   const [success, setSuccess] = useState<string | null>(null);
   const [totalAmount, setTotalAmount] = useState<number>(100);
 
+  //Handling logic when clicking the apply button, we are getting the promo code from the input field and sending it to the server to check if it's valid
   const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     const promoCode = (
@@ -55,6 +57,7 @@ export default function Home() {
     }
   };
 
+  //Quite a simple UI with alot of logic behind going. We can if we want to export it to a seperate component and redner it here
   return (
     <main className=" p-4 mx-auto bg-white w-[350px] md:w-full rounded-2xl shadow-2xl">
       <div className="discount-card flex flex-col gap-2">
@@ -105,10 +108,8 @@ export default function Home() {
               </p>
               <button
                 onClick={() => {
-                  console.log(activeDiscountsCombined);
                   activeDiscountsCombined.delete(code);
                   setActiveDiscountsCombined(new Set(activeDiscountsCombined));
-                  console.log(activeDiscountsCombined);
                 }}
               >
                 <XIcon className="size-4 mr-8" />
@@ -128,10 +129,8 @@ export default function Home() {
               </p>
               <button
                 onClick={() => {
-                  console.log(activeDiscountsSingle);
                   activeDiscountsSingle.delete(code);
                   setActiveDiscountsSingle(new Set(activeDiscountsSingle));
-                  console.log(activeDiscountsSingle);
                 }}
               >
                 <XIcon className="size-4 mr-8" />

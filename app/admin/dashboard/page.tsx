@@ -8,6 +8,7 @@ import { auth } from "@/server/auth";
 
 export default async function Dashboard(){
 
+    // Check if the user is an admin
     const session = await auth();
     if(!session) return <NotAdminError />;
 

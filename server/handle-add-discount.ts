@@ -9,7 +9,6 @@ import { auth } from "./auth";
 const actionClient = createSafeActionClient();
 
 const session = await auth();
-console.log(session);
 
 
 export const handleAddDiscount = actionClient

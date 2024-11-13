@@ -41,6 +41,7 @@ import { handleEditDiscount } from "@/server/handle-edit-discount";
 //WE NEED TO THINK IFFFF WE NEED TO SETUP A BOOLEAN FOR EDIT OR ADD
 //------------------------------------------------------------------
 
+//This entire component related to the form for adding or editing a discount
 
 export const DiscountForm = () => {
 
@@ -51,6 +52,7 @@ export const DiscountForm = () => {
 
   const id = searchParams.get('id');
   
+  //Only will fetch if there is an id means we are editing the discount
     const {data:discount} = useQuery<Discount | undefined>({
       queryKey:['discountById'],
       queryFn:() => getDiscountById(Number(id)),
@@ -72,7 +74,7 @@ export const DiscountForm = () => {
     },
   });
 
-  // Update form values when `discount` is loaded
+  // Update form values when `discount` is loaded , again this is only if we are editing the discount
   useEffect(() => {
     if (discount) {
       form.reset({
@@ -109,13 +111,13 @@ export const DiscountForm = () => {
       }
     }
 
-    
-
-    
+    //This is logic if we were able to add or edit the discount
     router.push('/admin/dashboard')
     
   };
 
+
+  //
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -197,7 +199,9 @@ export const DiscountForm = () => {
                         onChange={(e) => field.onChange(e.target.value)}
                       />
                     </FormControl>
-                    <FormDescription />
+                    <FormDescription>
+                      Leave blank if there is no limit
+                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}

@@ -22,6 +22,7 @@ export default function CouponsByUser() {
 
     const [userCoupons, setUserCoupons] = useState<Discount[] | null>(null);
 
+    // When we click the button we will get the user id and then we will get the discounts by user id
     const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
         e.preventDefault();
         const userId = (
@@ -32,6 +33,7 @@ export default function CouponsByUser() {
         setUserCoupons(userDiscounts);
     }
 
+          //UI and logic for the component
   return (
     
         <Dialog>

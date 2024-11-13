@@ -35,8 +35,6 @@ export const RegisterForm = () => {
 
   const onSubmit = async (values: z.infer<typeof RegisterSchema>) => {
     const result = await handleRegister(values);
-    console.log(values);
-    console.log(result);
   };
 
   return (

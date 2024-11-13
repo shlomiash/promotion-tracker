@@ -30,6 +30,7 @@ import {
 } from "@/components/ui/popover"
  
 export default function CouponsByUser() {
+  //Setting default date range
     const [date, setDate] = useState<DateRange | undefined>({
         from: new Date(2024, 10, 1),
         to: addDays(new Date(2024, 10, 1), 20),
@@ -37,15 +38,18 @@ export default function CouponsByUser() {
 
       const [dateCoupons, setDateCoupons] = useState<Discount[] | null>(null);
 
+      //Function to get discounts by creation date, only run when date changes
       const handleSubmit = useCallback(async () => {
         const dateDiscounts = await getDiscountsByCreationDate(date);
         return setDateCoupons(dateDiscounts);
       }, [date]);
 
+      //Only runs when date changes
       useEffect(() => {
         handleSubmit();
           }, [date]);
 
+          //UI and logic for the component
   return (
         <Dialog>
         <DialogTrigger asChild>
