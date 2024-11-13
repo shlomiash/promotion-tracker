@@ -2,7 +2,7 @@
 
 import { discountCodes } from "./data/discounts";
 
-export default async function handleDiscountCode(code: string | null ,total: number , activeDiscountsCombined: Set<string> , activeDiscountsSingle: Set<string>) {
+export default async function handleAddDiscountCode(code: string | null ,total: number , activeDiscountsCombined: Set<string> , activeDiscountsSingle: Set<string>) {
 
     //All discounts should be applied from the initial total amount
     const temporaryDiscountTotal = 100;

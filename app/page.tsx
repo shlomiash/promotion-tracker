@@ -5,9 +5,10 @@ import DiscountSuccess from "@/components/client/discount-success";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import handleDiscountCode from "@/server/handle-discount-code";
+import handleAddDiscountCode from "@/server/handle-add-discount-code";
 import { XIcon, ArrowRight } from "lucide-react";
 import { useState } from "react";
+import handleDeleteDiscountCode from "@/server/handle-delete-discount";
 
 export default function Home() {
   //We are seperating the active discounts into two sets, one for the combined discounts and one for the single discounts
@@ -34,7 +35,7 @@ export default function Home() {
       total,
       activeDiscountsCombineded,
       activeDiscountsSingled,
-    } = await handleDiscountCode(
+    } = await handleAddDiscountCode(
       promoCode,
       totalAmount,
       activeDiscountsCombined,
@@ -107,7 +108,9 @@ export default function Home() {
                 has been applied successfully! 🎉🎉
               </p>
               <button
-                onClick={() => {
+                onClick={async () => {
+                  const {newTotal} = await handleDeleteDiscountCode(code,totalAmount);
+                  setTotalAmount(newTotal as number);
                   activeDiscountsCombined.delete(code);
                   setActiveDiscountsCombined(new Set(activeDiscountsCombined));
                 }}
@@ -128,7 +131,9 @@ export default function Home() {
                 has been applied successfully! 🎉🎉
               </p>
               <button
-                onClick={() => {
+                onClick={async () => {
+                  const {newTotal} = await handleDeleteDiscountCode(code,totalAmount);
+                  setTotalAmount(newTotal as number);
                   activeDiscountsSingle.delete(code);
                   setActiveDiscountsSingle(new Set(activeDiscountsSingle));
                 }}
