@@ -1,5 +1,7 @@
 'use server'
 
+import { DateRange } from "react-day-picker"
+
 import { discountCodes } from "./data/discounts";
 
 
@@ -14,5 +16,10 @@ export const getDiscountById = async (id: number) =>{
 
 export const getDiscountsByUserId = async (userId: number) =>{
     return discountCodes.filter(discount => discount.userCreatedId == userId);
+}
+
+export const getDiscountsByCreationDate = async (rangeDate: DateRange | undefined) =>{
+    if(!rangeDate || !rangeDate.from || !rangeDate.to) return null;
+    return discountCodes.filter(discount => (discount.createdAt >= rangeDate.from) && (discount.createdAt <= rangeDate.to));
 }
  
