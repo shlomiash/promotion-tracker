@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import FormError from "./form-error";
-import { handleRegister } from "@/server/handle-register";
+import { handleRegister } from "@/server/actions/handle-register";
 
 export const RegisterForm = () => {
 

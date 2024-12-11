@@ -14,7 +14,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { Discount } from "@/server/data/discounts"
-import { getDiscountsByCreationDate } from "@/server/get-data"
+import { getDiscountsByCreationDate } from "@/server/actions/get-data"
 import { useCallback, useEffect, useState } from "react"
 
 import { addDays, format } from "date-fns"

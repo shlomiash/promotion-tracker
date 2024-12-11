@@ -1,6 +1,6 @@
 "use server";
 
-import { discountCodes } from "./data/discounts";
+import { discountCodes } from "@/server/data/discounts";
 
 export default async function handleDeleteDiscountCode(code: string | null ,currentTotal: number ) {
    

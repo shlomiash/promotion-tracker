@@ -15,7 +15,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Discount } from "@/server/data/discounts"
-import { getDiscountsByUserId } from "@/server/get-data"
+import { getDiscountsByUserId } from "@/server/actions/get-data"
 import { useState } from "react"
  
 export default function CouponsByUser() {

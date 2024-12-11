@@ -2,7 +2,7 @@
 
 import { DateRange } from "react-day-picker"
 
-import { discountCodes } from "./data/discounts";
+import { discountCodes } from "@/server/data/discounts";
 
 
 export const getDiscounts = async () =>{

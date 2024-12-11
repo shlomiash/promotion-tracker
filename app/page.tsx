@@ -5,10 +5,10 @@ import DiscountSuccess from "@/components/client/discount-success";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import handleAddDiscountCode from "@/server/handle-add-discount-code";
+import handleAddDiscountCode from "@/server/actions/handle-add-discount-code";
 import { XIcon, ArrowRight } from "lucide-react";
 import { useState } from "react";
-import handleDeleteDiscountCode from "@/server/handle-delete-discount";
+import handleDeleteDiscountCode from "@/server/actions/handle-delete-discount";
 
 export default function Home() {
   //We are seperating the active discounts into two sets, one for the combined discounts and one for the single discounts

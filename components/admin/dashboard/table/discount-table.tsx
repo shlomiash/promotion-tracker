@@ -13,7 +13,7 @@ import { Badge } from "@/components/ui/badge"
 import { EditButton } from "./edit-button";
 import { useQuery } from "@tanstack/react-query";
 import { Discount } from "@/server/data/discounts";
-import { getDiscounts } from "@/server/get-data";
+import { getDiscounts } from "@/server/actions/get-data";
 import { DeleteButton } from "./delete-button";
 
 

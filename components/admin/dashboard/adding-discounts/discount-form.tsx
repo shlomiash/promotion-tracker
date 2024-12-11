@@ -16,7 +16,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { handleAddDiscount } from "@/server/handle-add-discount";
+import { handleAddDiscount } from "@/server/actions/handle-add-discount";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { format } from "date-fns"
@@ -32,10 +32,10 @@ import { Switch } from "@/components/ui/switch"
 import FormError from "@/components/auth/form-error";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getDiscountById } from "@/server/get-data";
+import { getDiscountById } from "@/server/actions/get-data";
 import { useQuery } from "@tanstack/react-query";
 import { Discount } from "@/server/data/discounts";
-import { handleEditDiscount } from "@/server/handle-edit-discount";
+import { handleEditDiscount } from "@/server/actions/handle-edit-discount";
 
 //------------------------------------------------------------------
 //WE NEED TO THINK IFFFF WE NEED TO SETUP A BOOLEAN FOR EDIT OR ADD
@@ -60,7 +60,6 @@ export const DiscountForm = () => {
     });
 
  
-
   const form = useForm<z.infer<typeof DiscountSchema>>({
     resolver: zodResolver(DiscountSchema),
     defaultValues: {

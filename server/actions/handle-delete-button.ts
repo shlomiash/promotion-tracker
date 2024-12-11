@@ -1,6 +1,6 @@
 'use server'
 
-import {discountCodes } from "./data/discounts";
+import {discountCodes } from "@/server/data/discounts";
 
 export const handleDeleteDiscount = async (id:number) => {
     //We need to delete the discount with the id

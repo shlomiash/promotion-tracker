@@ -1,7 +1,7 @@
 'use client'
 
 import { Button } from "@/components/ui/button"
-import { getDiscounts } from "@/server/get-data";
+import { getDiscounts } from "@/server/actions/get-data";
 import * as XLSX from "xlsx";
 
 

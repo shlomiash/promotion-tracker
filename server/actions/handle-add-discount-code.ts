@@ -1,6 +1,6 @@
 "use server";
 
-import { discountCodes } from "./data/discounts";
+import { discountCodes } from "@/server/data/discounts";
 
 export default async function handleAddDiscountCode(code: string | null ,total: number , activeDiscountsCombined: Set<string> , activeDiscountsSingle: Set<string>) {
 
