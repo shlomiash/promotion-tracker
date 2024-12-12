@@ -13,6 +13,28 @@ const admin = {
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   session:{strategy:"jwt"},
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id; // Add user ID to token
+        token.name = user.name;
+        token.email = user.email;
+        token.image = user.image;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      // Add token properties to the session
+      session.user = {
+        id: token.id as string,  // Retrieve id from token
+        name: token.name ?? '',
+        email: token.email ?? '',
+        image: token.image as string | undefined,
+        emailVerified: token.email_verified as Date | null
+      };
+      return session;
+    },
+  },
   providers: [
     //This is a custom provider that allows users to sign in with email and password
     Credentials({
@@ -33,11 +55,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
         const isPasswordValid = await bcrypt.compare(password, user.password);
 
-        if(user?.password === password){
-          return {id:user.id,image:'https://github.com/shadcn.png'};
+        if(!isPasswordValid){
+          console.log('password is not valid')
+          return null;
         }
-
-       return null;
+        
+        console.log('user',user);
+        return user;
 
       }
     })

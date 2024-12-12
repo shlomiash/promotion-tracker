@@ -19,12 +19,6 @@ import { DeleteButton } from "./delete-button";
 
 export default function DiscountTable() {
 
-//  I just want to show that I know how to use the fetch api routes
-  // const { data:discounts , error,isLoading} = useQuery<Discount[]>({
-  //   queryKey:['discounts'],
-  //   queryFn:() => fetch('/api/discount').then(res => res.json())
-  // })
-
   // This optino is without fetch with api route , which i think its easier in nextjs
   const { data:discounts = [],isLoading} = useQuery<Discount[]>({
     queryKey:['discounts'],
@@ -63,7 +57,7 @@ export default function DiscountTable() {
               <span>{discount.amount}</span>
               <span>{discount.isFixed? '₪' : '%'}</span>
               </TableCell>
-            <TableCell >{discount.expires?.toLocaleDateString()}</TableCell>
+            <TableCell >{discount.expires}</TableCell>
             <TableCell >{discount.createdAt?.toLocaleDateString()}</TableCell>
             <TableCell >{discount.userCreatedId}</TableCell>
             <TableCell >{discount.note}</TableCell>

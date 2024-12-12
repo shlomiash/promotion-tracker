@@ -16,13 +16,15 @@ export const users = pgTable("user", {
    
 //----------DISCOUNTS TABLE SCHEMA----------------
 export const discounts = pgTable("discounts", {
-  id: serial("id").primaryKey(),
+  id: text("id")
+  .primaryKey()
+  .$defaultFn(() => crypto.randomUUID()),
   code: text("code").notNull(),
   limits: integer("limits"), 
   amount: integer("amount").notNull(),
-  userCreatedId: integer("user_created_id").notNull(),
+  userCreatedId: text("user_created_id").notNull(),
   note: text("note"),
-  createdAt: timestamp("emailVerified", { mode: "date" }).notNull(),
+  createdAt: timestamp("CreatedAt", { mode: "date" }).notNull(),
   expires: date("expires"), 
   canBeCombined: boolean("can_be_combined").notNull(),
   active: boolean("active").notNull(),

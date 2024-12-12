@@ -15,7 +15,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Discount } from "@/server/data/discounts"
-import { getDiscountsByUserId } from "@/server/actions/get-data"
+import { getDiscountById } from "@/server/actions/get-data"
 import { useState } from "react"
  
 export default function CouponsByUser() {
@@ -25,12 +25,14 @@ export default function CouponsByUser() {
     // When we click the button we will get the user id and then we will get the discounts by user id
     const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        //Get the user id from the form
         const userId = (
           e.currentTarget.elements.namedItem("user-id") as HTMLInputElement
         )?.value;
 
-        const userDiscounts = await getDiscountsByUserId(parseInt(userId));
-        setUserCoupons(userDiscounts);
+        //Get the discounts by user id
+        const userDiscounts = await getDiscountById(userId);
     }
 
           //UI and logic for the component
