@@ -20,8 +20,13 @@ import {
 import { Input } from "@/components/ui/input";
 import FormError from "./form-error";
 import { handleRegister } from "@/server/actions/handle-register";
+import FormSuccess from "./form-success";
+import { useState } from "react";
 
 export const RegisterForm = () => {
+
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
 
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
@@ -35,7 +40,14 @@ export const RegisterForm = () => {
 
   const onSubmit = async (values: z.infer<typeof RegisterSchema>) => {
     const result = await handleRegister(values);
-    console.log(result);
+    if(result?.data?.error){
+      setError(result.data.error);
+      setSuccess(null);
+    }
+    else{
+      setSuccess(result?.data?.suceess??null);
+      setError(null);
+    }
   };
 
   return (
@@ -123,7 +135,9 @@ export const RegisterForm = () => {
                   </FormItem>
                 )}
               />
-              <FormError message="Cannot create a new user admin for this moment" />
+
+              <FormError message={error} />
+              <FormSuccess message={success}/>
             </div>
           </div>
           <Button type="submit" className="w-full">

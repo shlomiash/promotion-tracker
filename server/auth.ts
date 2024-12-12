@@ -4,6 +4,7 @@ import { LoginSchema } from "@/types/login-schema"
 import { db } from "@/server/db/db"
 import { eq } from "drizzle-orm"
 import { users } from "./db/schema"
+import bcrypt from 'bcrypt'
 
 const admin = {
   username: process.env.NEXT_PUBLIC_ADMIN_USERNAME,
@@ -24,12 +25,16 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
         const { email, password } = validateFields.data;
 
-        const existingUser = await db.query.users.findFirst({
+        const user = await db.query.users.findFirst({
           where:eq(users.email,email)
         });
 
-        if(existingUser?.password === password){
-          return {id:existingUser.id,image:'https://github.com/shadcn.png'};
+        if(!user || !user.password) return null
+
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+
+        if(user?.password === password){
+          return {id:user.id,image:'https://github.com/shadcn.png'};
         }
 
        return null;

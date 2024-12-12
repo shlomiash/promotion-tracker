@@ -8,6 +8,20 @@
       "when": 1733913728249,
       "tag": "0000_groovy_rictor",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1733915559918,
+      "tag": "0001_young_metal_master",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1734023439240,
+      "tag": "0002_clear_bedlam",
+      "breakpoints": true
     }
   ]
 }
