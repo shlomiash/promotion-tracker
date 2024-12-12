@@ -2,8 +2,8 @@
 
 import { DateRange } from "react-day-picker"
 import { db } from "@/server/db/db";
-import { eq } from "drizzle-orm";
-import { discounts } from "../db/schema";
+import { and, eq, gte, lte } from "drizzle-orm";
+import { discounts } from "@/server/db/schema";
 import { Discount } from "../data/discounts";
 
 export const getDiscounts = async () =>{
@@ -21,12 +21,19 @@ export const getDiscountById = async (id: string) =>{
     return discount as Discount[];
 }
 
-// export const getDiscountsByUserId = async (userId: number) =>{
-//     return discountCodes.filter(discount => discount.userCreatedId == userId);
-// }
 
-// export const getDiscountsByCreationDate = async (rangeDate: DateRange | undefined) =>{
-//     if(!rangeDate || !rangeDate.from || !rangeDate.to) return null;
-//     return discountCodes.filter(discount => (discount.createdAt >= rangeDate.from!) && (discount.createdAt <= rangeDate.to!));
-// }
+export const getDiscountsByCreationDate = async (rangeDate: DateRange | undefined) =>{
+    if(!rangeDate || !rangeDate.from || !rangeDate.to) return null;
+
+    const dateDiscounts = await db.query.discounts.findMany({
+        where: and(
+            gte(discounts.createdAt, rangeDate.from!), // Greater than or equal to rangeDate.from
+            lte(discounts.createdAt, rangeDate.to!)   // Less than or equal to rangeDate.to
+          ),
+    })
+
+    if(!dateDiscounts) return null;
+
+    return dateDiscounts as Discount[];
+}
  
