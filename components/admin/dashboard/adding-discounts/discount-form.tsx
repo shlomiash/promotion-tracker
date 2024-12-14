@@ -53,9 +53,9 @@ export const DiscountForm = () => {
   const id = searchParams.get('id');
   
   //Only will fetch if there is an id means we are editing the discount
-    const {data:discount} = useQuery<Discount | undefined>({
+    const {data:discount} = useQuery<Discount | null>({
       queryKey:['discountById'],
-      queryFn:() => getDiscountById(Number(id)),
+      queryFn:() => getDiscountById(id ?? ''),
       enabled: !!id,
     });
 
@@ -64,7 +64,7 @@ export const DiscountForm = () => {
     resolver: zodResolver(DiscountSchema),
     defaultValues: {
       code: discount?.code || "",
-      expires: discount?.expires || undefined,
+      expires: discount?.expires ? new Date(discount?.expires) : undefined,
       isFixed: true,
       amount: 0,
       canBeCombined: false,
@@ -74,24 +74,26 @@ export const DiscountForm = () => {
   });
 
   // Update form values when `discount` is loaded , again this is only if we are editing the discount
-  useEffect(() => {
-    if (discount) {
-      form.reset({
-        code: discount.code || "",
-        isFixed: discount.isFixed ?? false, // Using nullish coalescing to handle undefined
-        limits: discount.limits || undefined,
-        expires: discount.expires || undefined,
-        amount: discount.amount || 0,
-        canBeCombined: discount.canBeCombined || false,
-        active: discount.active || false,
-        note: discount.note || "",
-      });
-    }
-  }, [discount, form]);
+  // useEffect(() => {
+  //   if (discount) {
+  //     form.reset({
+  //       code: discount.code || "",
+  //       isFixed: discount.isFixed ?? false, // Using nullish coalescing to handle undefined
+  //       limits: discount.limits || undefined,
+  //       expires: discount?.expires ? (new Date(discount?.expires)) : undefined,
+  //       amount: discount.amount || 0,
+  //       canBeCombined: discount.canBeCombined || false,
+  //       active: discount.active || false,
+  //       note: discount.note || "",
+  //     });
+  //   }
+  // }, [discount, form]);
 
 
   const onSubmit = async (values: z.infer<typeof DiscountSchema>) => {
 
+    const parsedValues = {...values, expires: values.expires ? new Date(values.expires) : undefined};
+    
     let result ;
     if(id) {
        result = await handleEditDiscount(values, Number(id));
@@ -102,7 +104,7 @@ export const DiscountForm = () => {
       }
     }
     else{
-       result = await handleAddDiscount(values);
+       result = await handleAddDiscount(parsedValues);
        console.log(values);
        if(result?.data?.error){
         setError(result.data.error);
@@ -144,9 +146,9 @@ export const DiscountForm = () => {
                     <FormLabel>Discount Type</FormLabel>
                     <FormControl>
                       <RadioGroup
-                        defaultValue={discount?.isFixed ? "fixed" : "percentage"}
+                        defaultValue="fixed"
                         onValueChange={(value) =>
-                          field.onChange(value === "true")
+                          field.onChange(value === "fixed")
                         }
                       >
                         <div className="flex items-center space-x-2">
@@ -233,7 +235,7 @@ export const DiscountForm = () => {
                 <PopoverContent className="w-auto p-0" align="start">
                   <Calendar
                     mode="single"
-                    selected={discount?.expires || undefined}
+                    selected={discount?.expires ? (new Date(discount?.expires)) : undefined}
                     onSelect={field.onChange}
                     disabled={(date) =>
                       date < new Date()

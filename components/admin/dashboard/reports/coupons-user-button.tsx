@@ -15,7 +15,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Discount } from "@/server/data/discounts"
-import { getDiscountById } from "@/server/actions/get-data"
+import { getDiscountsByUserId } from "@/server/actions/get-data"
 import { useState } from "react"
  
 export default function CouponsByUser() {
@@ -32,7 +32,7 @@ export default function CouponsByUser() {
         )?.value;
 
         //Get the discounts by user id
-        const userDiscounts = await getDiscountById(userId);
+        const userDiscounts = await getDiscountsByUserId(userId);
     }
 
           //UI and logic for the component

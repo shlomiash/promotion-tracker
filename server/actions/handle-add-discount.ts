@@ -2,8 +2,10 @@
 
 import { DiscountSchema } from "@/types/discount-schema";
 import { createSafeActionClient } from "next-safe-action";
-import { discountCodes } from "@/server/data/discounts";
 import { auth } from "../auth";
+import { eq } from "drizzle-orm";
+import { discounts } from "../db/schema";
+import { db } from "../db/db";
 
 const actionClient = createSafeActionClient();
 
@@ -24,27 +26,38 @@ export const handleAddDiscount = actionClient
         note,
       },
     }) => {
-      //Normally here I will just send the data to the database.
-      //But for now I will just create a new object and return it
-      //Will get the user id from the session
-      //const userCreatedId = session?.user?.id;
 
-      //Checking if discount code already exists
-      const discount = discountCodes.filter(
-        (discount) => discount.code === code
-      );
-      if (discount.length > 0) {
-        return {
-          error: "Discount code already exists , please choose another one",
-        };
+      console.log("is Fixed:",isFixed);
+
+       // Check if the discount code already exists
+       const existingDiscount = await db.query.discounts.findFirst({
+        where:eq(discounts.code,code)
+      })
+
+      if(existingDiscount){
+        return { error: "Discount code already exists"}
       }
 
-      // Insert the user into the database
-      //await db.insert(discounts).values({code, isFixed , active , canBeCombined , amount ,expires , limits ,note ,userCreatedId})
+      //Check for session
+      if (!session?.user?.id) {
+        return { error: "User not found" };
+      }
 
-      return {
-        error:
-          "Cannot Upload Promotion For This Moment , But you can see in inspect that data works on click",
-      };
+
+      // Create the discount
+      await db.insert(discounts).values({
+        code,
+        isFixed,
+        active,
+        canBeCombined,
+        amount,
+        expires: expires ? expires.toISOString() : null, 
+        limits,
+        note,
+        createdAt: new Date(),
+        userCreatedId: session?.user?.id,
+      })
+
+      return { success: "Discount created successfully" };
     }
   );

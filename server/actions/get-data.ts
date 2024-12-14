@@ -14,6 +14,14 @@ export const getDiscounts = async () =>{
 
 
 export const getDiscountById = async (id: string) =>{
+    const discount = await db.query.discounts.findFirst({
+        where: eq(discounts.id,id)
+    })
+    if(!discount) return null;
+    return discount as Discount;
+}
+
+export const getDiscountsByUserId = async (id: string) =>{
     const discount = await db.query.discounts.findMany({
         where:eq(discounts.userCreatedId,id)
     })
