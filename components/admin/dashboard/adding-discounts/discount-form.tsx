@@ -74,20 +74,20 @@ export const DiscountForm = () => {
   });
 
   // Update form values when `discount` is loaded , again this is only if we are editing the discount
-  // useEffect(() => {
-  //   if (discount) {
-  //     form.reset({
-  //       code: discount.code || "",
-  //       isFixed: discount.isFixed ?? false, // Using nullish coalescing to handle undefined
-  //       limits: discount.limits || undefined,
-  //       expires: discount?.expires ? (new Date(discount?.expires)) : undefined,
-  //       amount: discount.amount || 0,
-  //       canBeCombined: discount.canBeCombined || false,
-  //       active: discount.active || false,
-  //       note: discount.note || "",
-  //     });
-  //   }
-  // }, [discount, form]);
+  useEffect(() => {
+    if (discount) {
+      form.reset({
+        code: discount.code || "",
+        isFixed: discount.isFixed ?? false, // Using nullish coalescing to handle undefined
+        limits: discount.limits || undefined,
+        expires: discount?.expires ? (new Date(discount?.expires)) : undefined,
+        amount: discount.amount || 0,
+        canBeCombined: discount.canBeCombined || false,
+        active: discount.active || false,
+        note: discount.note || "",
+      });
+    }
+  }, [discount, form]);
 
 
   const onSubmit = async (values: z.infer<typeof DiscountSchema>) => {
@@ -96,7 +96,7 @@ export const DiscountForm = () => {
     
     let result ;
     if(id) {
-       result = await handleEditDiscount(values, Number(id));
+       result = await handleEditDiscount(parsedValues, id);
       console.log('updated values are ' , values , 'id is ' , id);
       if(result?.error){
         setError(result.error);

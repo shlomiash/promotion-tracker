@@ -31,8 +31,10 @@ export default function CouponsByUser() {
           e.currentTarget.elements.namedItem("user-id") as HTMLInputElement
         )?.value;
 
+
         //Get the discounts by user id
         const userDiscounts = await getDiscountsByUserId(userId);
+        setUserCoupons(userDiscounts);
     }
 
           //UI and logic for the component

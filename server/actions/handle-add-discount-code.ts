@@ -1,6 +1,8 @@
 "use server";
 
-import { discountCodes } from "@/server/data/discounts";
+import { eq } from "drizzle-orm";
+import { db } from "../db/db";
+import { discounts } from "../db/schema";
 
 export default async function handleAddDiscountCode(code: string | null ,total: number , activeDiscountsCombined: Set<string> , activeDiscountsSingle: Set<string>) {
 
@@ -9,10 +11,12 @@ export default async function handleAddDiscountCode(code: string | null ,total: 
 
   if (!code) return { error: "Promo Code consists from at least 1 letter!" };
 
-  const discount = discountCodes.filter((discount) => discount.code === code);
+  const existingDiscount = await db.query.discounts.findFirst({
+      where:eq(discounts.code,code)
+    });
 
   //Checking if discount code exists
-  if (discount.length === 0) {
+  if (!existingDiscount) {
     return { error: "Discount code does not exist" };
   }
 
@@ -23,37 +27,37 @@ export default async function handleAddDiscountCode(code: string | null ,total: 
 
 
   //Checking if discount can be applied 
-  if (discount[0].limits == 0) {
-    discount[0].active = false;
+  if (existingDiscount.limits == 0) {
+    existingDiscount.active = false;
     //Update database logic here...
   }
 
 
   //Checking discount active status
-  if (!discount[0].active) {
+  if (!existingDiscount.active) {
     return { error: "Discount code is not active" };
   }
 
   //Checking if discount has expired date
-  const noExpiration = discount[0]?.expires === undefined;
+  const noExpiration = existingDiscount?.expires === null;
 
     //HANDLE THIS
     if (!noExpiration) {
-      if (new Date() > (discount[0]?.expires as Date)) {
+      if (new Date() > new Date(existingDiscount?.expires!)) {
         return { error: "Discount code has expired" };
       }
     }
 
   //We are going to check few cases to make error handling clear.
-  if((activeDiscountsSingle.size > 0 && !discount[0].canBeCombined) || (activeDiscountsCombined.size > 0 && !discount[0].canBeCombined)) {
+  if((activeDiscountsSingle.size > 0 && !existingDiscount.canBeCombined) || (activeDiscountsCombined.size > 0 && !existingDiscount.canBeCombined)) {
     return { error: "This Discount code cannot be combined with others"};
   }
 
-  if((activeDiscountsSingle.size > 0 && discount[0].canBeCombined)  ) {
+  if((activeDiscountsSingle.size > 0 && existingDiscount.canBeCombined)  ) {
     return { error: "You already applied discount code that cannot be combined with others"};
   }
 
-  if(!discount[0].canBeCombined){
+  if(!existingDiscount.canBeCombined){
     activeDiscountsSingle.add(code);
   }
     else {
@@ -61,17 +65,16 @@ export default async function handleAddDiscountCode(code: string | null ,total: 
     }
 
 //Checking if discount is fixed or percentage
-  if(discount[0].isFixed) {
-    total = total - discount[0].amount;
+  if(existingDiscount.isFixed) {
+    total = total - existingDiscount.amount;
   }
   else {
-    total = total - (temporaryDiscountTotal * discount[0].amount / 100);
+    total = total - (temporaryDiscountTotal * existingDiscount.amount / 100);
   }
 
   //Updating logic for discounts that have limits
-  if (discount[0].limits !== undefined) {
-    discount[0].limits = discount[0].limits - 1;
-    //Update database logic here...
+  if (existingDiscount.limits !== null) {
+    existingDiscount.limits = existingDiscount.limits - 1 ;
   }
 
   return { success: "Disount code applied successfully!" , total: total  , activeDiscountsCombineded: activeDiscountsCombined , activeDiscountsSingled: activeDiscountsSingle };

@@ -25,7 +25,6 @@ export default function DiscountTable() {
     queryFn:getDiscounts,
   })
 
-
   if (isLoading) return <p>Loading...</p>;
           //UI and logic for the component
 
@@ -34,7 +33,7 @@ export default function DiscountTable() {
       <TableCaption>A list of your discounts.</TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead >ID</TableHead>
+          
           <TableHead >Code</TableHead>
           <TableHead >Status</TableHead>
           <TableHead>Limits</TableHead>
@@ -49,7 +48,7 @@ export default function DiscountTable() {
       <TableBody>
         {  discounts?.map((discount) => (
           <TableRow key={discount.id}>
-            <TableCell >{discount.id}</TableCell>
+        
             <TableCell >{discount.code}</TableCell>
             <TableCell >{discount.active? <Badge className="bg-green-800">active</Badge> : <Badge className="bg-red-900" >disabled</Badge>}</TableCell>
             <TableCell>{discount.limits}</TableCell>

@@ -27,7 +27,6 @@ export const handleAddDiscount = actionClient
       },
     }) => {
 
-      console.log("is Fixed:",isFixed);
 
        // Check if the discount code already exists
        const existingDiscount = await db.query.discounts.findFirst({
